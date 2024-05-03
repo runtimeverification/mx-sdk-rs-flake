@@ -1,5 +1,5 @@
 {
-  description = "A very basic flake";
+  description = "Nix packaging for MultiversX SDK tools";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
