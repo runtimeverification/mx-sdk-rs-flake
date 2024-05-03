@@ -38,6 +38,15 @@
             })
           ];
         };
+
+        make-test = sc-meta: pkgs.stdenv.mkDerivation {
+          pname = "sc-meta-test";
+          version = "0";
+          buildInputs = [ sc-meta pkgs.coreutils ];
+          unpackPhase = "true";
+          buildPhase = "sc-meta --version | grep 0.48.0";
+          installPhase = "touch $out";
+        };
     });
   in flake-utils.lib.eachSystem [
       "x86_64-linux"
@@ -53,6 +62,7 @@
       in rec {
         packages = {
           sc-meta = (pkgs.rustPkgs.workspace.multiversx-sc-meta {});
+          test = pkgs.make-test packages.sc-meta;
           default = packages.sc-meta;
         };
     }) // {
