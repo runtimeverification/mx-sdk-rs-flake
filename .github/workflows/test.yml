@@ -17,6 +17,7 @@ jobs:
             os: macos-13
           - runner: MacM1
             os: self-macos-12
+    runs-on: ${{ matrix.runner }}
     steps:
       - name: 'Check out code'
         uses: actions/checkout@v4

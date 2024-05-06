@@ -91,17 +91,17 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1714635257,
-        "narHash": "sha256-4cPymbty65RvF1DWQfc+Bc8B233A1BWxJnNULJKQ1EY=",
+        "lastModified": 1707163378,
+        "narHash": "sha256-oz+BzUDwtyircjjxv9aPYOS5gobxLCjD2il+gb/bCRo=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "63c3a29ca82437c87573e4c6919b09a24ea61b0f",
+        "rev": "e2ffefe304d941bb98989847944f3b58e0adcdd5",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-unstable",
         "repo": "nixpkgs",
+        "rev": "e2ffefe304d941bb98989847944f3b58e0adcdd5",
         "type": "github"
       }
     },
@@ -113,7 +113,11 @@
           "flake-utils"
         ],
         "mx-sdk-rs-src": "mx-sdk-rs-src",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": [
+          "rv-utils",
+          "nixpkgs"
+        ],
+        "rv-utils": "rv-utils"
       }
     },
     "rust-overlay": {
@@ -138,6 +142,24 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rv-utils": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1712915401,
+        "narHash": "sha256-mJsmecp+dZjYrQZ5l671ydRU/jfBJJRYtmTy/A1uH8M=",
+        "owner": "runtimeverification",
+        "repo": "rv-nix-tools",
+        "rev": "1a233c3c238a411f6d6a84d4e4b5a18ddd1f002b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "runtimeverification",
+        "repo": "rv-nix-tools",
         "type": "github"
       }
     },

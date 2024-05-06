@@ -2,7 +2,8 @@
   description = "Nix packaging for MultiversX SDK tools";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    rv-utils.url = "github:runtimeverification/rv-nix-tools";
+    nixpkgs.follows = "rv-utils/nixpkgs";
     cargo2nix.url = "github:cargo2nix/cargo2nix/release-0.11.0";
     flake-utils.follows = "cargo2nix/flake-utils";
     mx-sdk-rs-src = {
@@ -11,7 +12,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, cargo2nix, flake-utils, mx-sdk-rs-src }:
+  outputs = { self, rv-utils, nixpkgs, cargo2nix, flake-utils, mx-sdk-rs-src }:
   let
     overlay = (final: prev:
       let
