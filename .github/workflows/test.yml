@@ -1,0 +1,41 @@
+name: "Test Nix Flake"
+on:
+  pull_request:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compile-nix-flake:
+    name: 'Nix flake'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: [self-hosted, linux, normal]
+          - runner: macos-13
+            os: macos-13
+          - runner: MacM1
+            os: self-macos-12
+    steps:
+      - name: 'Check out code'
+        uses: actions/checkout@v4
+
+      - name: 'Install Nix'
+        uses: cachix/install-nix-action@v19
+        with:
+          install_url: https://releases.nixos.org/nix/nix-2.13.3/install
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
+      - name: 'Install Cachix'
+        uses: cachix/cachix-action@v12
+        with:
+          name: k-framework
+          authToken: '${{ secrets.CACHIX_PUBLIC_TOKEN }}'
+
+      - name: 'Build sc-meta'
+        run: GC_DONT_GC=1 nix build --print-build-logs .#sc-meta
+
+      - name: 'Test sc-meta'
+        run: GC_DONT_GC=1 nix build --print-build-logs .#test
