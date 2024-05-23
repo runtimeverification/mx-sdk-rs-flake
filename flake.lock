@@ -59,16 +59,16 @@
     "mx-sdk-rs-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1712645438,
-        "narHash": "sha256-QAtmavAiGMFXFcG9upf2B6ZLXl+F/YFl3f888AOg7HA=",
+        "lastModified": 1715846591,
+        "narHash": "sha256-nRcUQveQJEZACXg11Oz6LhtJuhTuu0leyaXamgEc5nM=",
         "owner": "multiversx",
         "repo": "mx-sdk-rs",
-        "rev": "66e38cbfa399789053ab29e0d31346098ee0674f",
+        "rev": "2ea77b9bb84c2c00b805023ef1544cbbd67f1283",
         "type": "github"
       },
       "original": {
         "owner": "multiversx",
-        "ref": "v0.48.0",
+        "ref": "v0.50.1",
         "repo": "mx-sdk-rs",
         "type": "github"
       }
