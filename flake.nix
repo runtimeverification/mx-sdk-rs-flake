@@ -7,7 +7,7 @@
     cargo2nix.url = "github:cargo2nix/cargo2nix/release-0.11.0";
     flake-utils.follows = "cargo2nix/flake-utils";
     mx-sdk-rs-src = {
-      url = "github:multiversx/mx-sdk-rs/v0.48.0";
+      url = "github:multiversx/mx-sdk-rs/v0.50.1";
       flake = false;
     };
   };
@@ -23,8 +23,7 @@
       in {
         rustPkgs = pkgs.rustBuilder.makePackageSet {
           packageFun = import ./Cargo.nix;
-          rustChannel = "nightly";
-          rustVersion = "2023-12-11";
+          rustVersion = "1.75.0";
           workspaceSrc = mx-sdk-rs-src;
 
           packageOverrides = pkgs: pkgs.rustBuilder.overrides.all ++ [
@@ -45,7 +44,7 @@
           version = "0";
           buildInputs = [ sc-meta pkgs.coreutils ];
           unpackPhase = "true";
-          buildPhase = "sc-meta --version | grep 0.48.0";
+          buildPhase = "sc-meta --version | grep 0.50.1";
           installPhase = "touch $out";
         };
     });
