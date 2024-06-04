@@ -39,6 +39,17 @@
           ];
         };
 
+        contracts = pkgs.stdenv.mkDerivation {
+          pname = "mx-sdk-contracts";
+          version = "0.50.1";
+          src = mx-sdk-rs-src;
+          dontBuild = true;
+          installPhase = ''
+            mkdir $out
+            cp -R contracts/* $out
+          '';
+        };
+
         make-test = sc-meta: pkgs.stdenv.mkDerivation {
           pname = "sc-meta-test";
           version = "0";
@@ -61,6 +72,7 @@
         };
       in rec {
         packages = {
+          inherit (pkgs) contracts;
           sc-meta = (pkgs.rustPkgs.workspace.multiversx-sc-meta {});
           test = pkgs.make-test packages.sc-meta;
           default = packages.sc-meta;
