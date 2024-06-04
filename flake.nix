@@ -7,23 +7,30 @@
     cargo2nix.url = "github:cargo2nix/cargo2nix/release-0.11.0";
     flake-utils.follows = "cargo2nix/flake-utils";
     mx-sdk-rs-src = {
-      url = "github:multiversx/mx-sdk-rs/v0.50.1";
+      url = "github:multiversx/mx-sdk-rs/v0.50.3";
       flake = false;
+    };
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, rv-utils, nixpkgs, cargo2nix, flake-utils, mx-sdk-rs-src }:
+  outputs = { self, rv-utils, nixpkgs, cargo2nix, flake-utils, mx-sdk-rs-src, rust-overlay }:
   let
     overlay = (final: prev:
       let
         pkgs = import nixpkgs {
           inherit (prev) system;
-          overlays = [ cargo2nix.overlays.default ];
+          overlays = [
+            cargo2nix.overlays.default
+            rust-overlay.overlays.default
+          ];
         };
       in {
         rustPkgs = pkgs.rustBuilder.makePackageSet {
           packageFun = import ./Cargo.nix;
-          rustVersion = "1.75.0";
+          rustVersion = "1.78.0";
           workspaceSrc = mx-sdk-rs-src;
 
           packageOverrides = pkgs: pkgs.rustBuilder.overrides.all ++ [
@@ -41,7 +48,7 @@
 
         contracts = pkgs.stdenv.mkDerivation {
           pname = "mx-sdk-contracts";
-          version = "0.50.1";
+          version = "0.50.3";
           src = mx-sdk-rs-src;
           dontBuild = true;
           installPhase = ''
@@ -55,7 +62,7 @@
           version = "0";
           buildInputs = [ sc-meta pkgs.coreutils ];
           unpackPhase = "true";
-          buildPhase = "sc-meta --version | grep 0.50.1";
+          buildPhase = "sc-meta --version | grep 0.50.3";
           installPhase = "touch $out";
         };
     });
